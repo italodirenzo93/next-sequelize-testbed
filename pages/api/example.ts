@@ -1,5 +1,5 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import {db} from '@/models'
+import { sequelize } from '@/models'
 
 type Proj = {
     id: number
@@ -9,10 +9,10 @@ type Proj = {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const stuff = await db.models.Project.findAll({
+    const stuff = await sequelize.models.Project.findAll({
         order: ['name'],
         limit: 3,
-        include: [db.models.User]
+        include: [sequelize.models.User]
     })
 
     const r = stuff.map<Proj>(p => ({
